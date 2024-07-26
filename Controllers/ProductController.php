@@ -7,7 +7,7 @@ class ProductController extends BaseController{
 
     public function __construct()
     {
-        $this->Model('ProductModel');
+        $this->loadModel('ProductModel');
         $this->productModel = new ProductModel;
     }
 
@@ -15,10 +15,13 @@ class ProductController extends BaseController{
 
     public function index(){
         
-        $product = $this->productModel->getAll(['*'], 2);
+        $product = $this->productModel->getAll(
+            ['*'], [
+            'column' => 'id', 
+            'orderType' => 'desc'], 
+            10);
         $this->view('frontend.products.index',[
-            'pageTitle' => 'Danh sách sản phẩm',
-            'product' => $product
+            'products' => $product
         ]);
     }
     public function show(){
@@ -26,6 +29,16 @@ class ProductController extends BaseController{
         return $this->view('frontend.products.show',[
            'product' => $product
         ]);
+    }
+
+    public function store(){
+        $data = [
+            'name' => 'Iphone 12',
+            'price' => 10000000,
+            'image' => null,
+            'category_id' => 4
+        ];
+        $this->productModel->store($data);
     }
 
     

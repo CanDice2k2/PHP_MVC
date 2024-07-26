@@ -10,7 +10,7 @@ class BaseController {
         return require (self::VIEW_FOLDER_NAME. '/' . str_replace('.', '/', $viewPath) . '.php');
     }
 
-    protected function model($modelPath, $data = []){
+    protected function loadModel($modelPath, $data = []){
         foreach ($data as $key => $value) {
             $$key = $value;
         }
