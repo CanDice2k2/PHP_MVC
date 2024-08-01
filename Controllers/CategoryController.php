@@ -16,7 +16,7 @@ class CategoryController extends BaseController{
     }
 
     public function store(){
-        
+        echo __METHOD__;
     }
 
     public function show(){
@@ -24,6 +24,22 @@ class CategoryController extends BaseController{
         $categories = $this->categoryModel->findById($id);
         echo '<pre>';
         print_r($categories);
+    }
+
+    public function update(){
+        $id = $_GET['id'];
+        $data = [
+            'name' => 'Iphone 12',
+            'price' => 123456,
+            'image' => '123.jpg',
+            'category_id' => 3
+        ];
+        $this->categoryModel->updateData($id,$data);
+    }
+
+    public function delete(){
+        $id = $_GET['id'];
+        $this->categoryModel->destroy($id);
     }
 }
 ?>

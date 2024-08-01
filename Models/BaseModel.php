@@ -25,19 +25,34 @@ class BaseModel extends Database{
         return mysqli_fetch_assoc($query);
     }
 
-    public function create($table,$data){
+    public function create($table,$data = []){
         $columns = implode(',',array_keys($data));
-        $values = implode("','",array_values($data));
-        $sql = "INSERT INTO " . $table ."(" . $columns . ") VALUES(" . "'" . $values . "'" . ")";
+
+        $newValues = array_map(function($value){
+            return "'" . $value . "'";
+        }, array_values($data));
+
+        $newValues = implode(',',$newValues);
+
+        $sql = "INSERT INTO ${table}($columns) VALUES ($newValues)";
+
+        $this->_query($sql);
+    }
+
+    public function update($table, $id, $data = []){
+        $newValues = [];
+        foreach($data as $key=> $values){
+            $newValues[] = $key . "= '" . $values. "'";
+        }
+        $newValues = implode(',',$newValues);
+        $sql = "UPDATE ${table} SET ${newValues} WHERE id = ${id}";
         echo $sql;
+        $this->_query($sql);
     }
 
-    public function update($data, $id){
-
-    }
-
-    public function delete($id){
-
+    public function delete($table, $id){
+        $sql = "DELETE FROM ${table} WHERE id = ${id}";
+        $this->_query($sql);
     }
 
     private function _query($sql){

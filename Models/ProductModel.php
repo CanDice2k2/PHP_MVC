@@ -16,6 +16,14 @@ class ProductModel extends BaseModel{
     public function store($data){
         $this->create(self::TABLE, $data);
     }
+
+    public function updateData($id, $data = []){
+        $this->update(self::TABLE, $id, $data);
+    }
+
+    public function destroy($id){
+        $this->delete(self::TABLE, $id);
+    }
 }
 
 ?>

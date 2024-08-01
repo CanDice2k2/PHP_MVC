@@ -33,15 +33,27 @@ class ProductController extends BaseController{
 
     public function store(){
         $data = [
-            'name' => 'Iphone 12',
+            'name' => 'Iphone 1',
             'price' => 10000000,
             'image' => null,
-            'category_id' => 4
+            'category_id' => 2
         ];
         $this->productModel->store($data);
     }
 
-    
+    public function update(){
+        $id = $_GET['id'];
+        $data = [
+            'name' => 'Iphone 12',
+            'price' => 123456,
+        ];
+        $this->productModel->updateData($id,$data);
+    }
+
+    public function delete(){
+        $id = $_GET['id'];
+        $this->productModel->destroy($id);
+    }
 }
 
 ?>
